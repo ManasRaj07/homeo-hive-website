@@ -35,7 +35,7 @@ const HeroSection = () => {
                 <a href="#contact">Start Healing →</a>
               </Button>
               <Button variant="heroOutline" size="lg" asChild>
-                <a href="tel:+911234567890">
+                <a href="tel:+917004483089">
                   <Phone className="w-4 h-4 mr-1" />
                   Call Now
                 </a>
