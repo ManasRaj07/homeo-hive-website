@@ -16,7 +16,7 @@ const contactDetails = [
   {
     icon: Mail,
     title: "Email Us",
-    lines: ["homeohive@gmail.com"],
+    lines: ["nehaa0224@gmail.com"],
     href: "mailto:homeohive@gmail.com",
   },
   {
