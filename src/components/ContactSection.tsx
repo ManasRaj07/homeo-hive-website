@@ -10,8 +10,8 @@ const contactDetails = [
   {
     icon: Phone,
     title: "Call Us",
-    lines: ["+91 12345 67890"],
-    href: "tel:+911234567890",
+    lines: ["+91 70044 83089"],
+    href: "tel:+917004483089",
   },
   {
     icon: Mail,
