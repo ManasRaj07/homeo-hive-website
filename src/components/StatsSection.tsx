@@ -1,8 +1,8 @@
 import { Star, Users, Award, Clock } from "lucide-react";
 
 const stats = [
-  { icon: Clock, value: "5+", label: "Years Experience" },
-  { icon: Users, value: "1000+", label: "Happy Patients" },
+  { icon: Clock, value: "3+", label: "Years Experience" },
+  { icon: Users, value: "100+", label: "Happy Patients" },
   { icon: Star, value: "4.8★", label: "Google Rating" },
   { icon: Award, value: "BHMS", label: "Certified Doctor" },
 ];

@@ -1,9 +1,9 @@
 import { Award, Star, Leaf, Users, Clock } from "lucide-react";
 
 const credentials = [
-  { icon: Clock, title: "5y+ Experience", sub: "Clinical Practice" },
+  { icon: Clock, title: "3y+ Experience", sub: "Clinical Practice" },
   { icon: Award, title: "BHMS", sub: "Homeopathy" },
-  { icon: Users, title: "1000+ Patients", sub: "Successfully Treated" },
+  { icon: Users, title: "100+ Patients", sub: "Successfully Treated" },
   { icon: Star, title: "4.8+ Rating", sub: "Trusted by Patients" },
 ];
 
