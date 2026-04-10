@@ -1,41 +1,59 @@
-import { Award, Star, Leaf } from "lucide-react";
+import { Award, Star, Leaf, Users, Clock } from "lucide-react";
+
+const credentials = [
+  { icon: Clock, title: "5y+ Experience", sub: "Clinical Practice" },
+  { icon: Award, title: "BHMS", sub: "Homeopathy" },
+  { icon: Users, title: "1000+ Patients", sub: "Successfully Treated" },
+  { icon: Star, title: "4.8+ Rating", sub: "Trusted by Patients" },
+];
 
 const AboutSection = () => {
   return (
     <section id="about" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-center max-w-4xl mx-auto">
-          {/* Circular portrait placeholder */}
-          <div className="flex justify-center">
-            <div className="w-[150px] h-[150px] rounded-full border-4 border-primary/20 bg-secondary/50 shadow-lg flex flex-col items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-primary/10" />
-              <div className="relative z-10 text-center">
-                <Leaf className="w-8 h-8 text-primary/40 mx-auto mb-1" />
-                <p className="text-[10px] text-muted-foreground/70 px-2">Add Photo</p>
-              </div>
+        <div className="text-center mb-4">
+          <span className="text-sm font-semibold text-primary uppercase tracking-wider">Meet Your Doctor</span>
+        </div>
+        <div className="text-center mb-12">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground">
+            Dr. Neha Bharti
+          </h2>
+          <p className="text-primary font-semibold mt-1">BHMS (Homeopathy)</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
+          {/* Text content */}
+          <div>
+            <p className="text-muted-foreground leading-relaxed mb-8 font-body text-base">
+              Dr. Neha Bharti is a compassionate homeopathic practitioner practicing at Homeo Hive, Katihar.
+              She provides personalized and safe treatments focused on long-term wellness and natural healing.
+              Her approach is rooted in treating the whole person — not just the symptoms
+              — through safe, gentle, and side-effect-free medicine.
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              {credentials.map((cred) => (
+                <div key={cred.title} className="flex items-start gap-3 bg-card rounded-lg p-3 border">
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <cred.icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-foreground">{cred.title}</p>
+                    <p className="text-xs text-muted-foreground">{cred.sub}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Text content */}
-          <div>
-            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              About <span className="text-primary">Dr. Neha Bharti</span>
-            </h2>
-            <p className="text-muted-foreground leading-relaxed mb-6 font-body">
-              Dr. Neha Bharti is a qualified homeopathic physician (BHMS) practicing at Homeo Hive, Katihar.
-              With a deep belief in the body's natural ability to heal, she offers personalized homeopathic care
-              for patients of all ages. Her approach is rooted in treating the whole person — not just the symptoms
-              — through safe, gentle, and side-effect-free medicine.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
-                <Award className="w-4 h-4" />
-                BHMS Certified
-              </span>
-              <span className="inline-flex items-center gap-2 bg-gold/10 text-gold-foreground px-4 py-2 rounded-full text-sm font-medium">
-                <Star className="w-4 h-4 text-gold fill-gold" />
-                4.8 on Google
-              </span>
+          {/* Circular portrait placeholder */}
+          <div className="flex justify-center">
+            <div className="w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] rounded-2xl border-4 border-primary/20 bg-secondary/50 shadow-xl flex flex-col items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-primary/10" />
+              <div className="relative z-10 text-center">
+                <Leaf className="w-12 h-12 text-primary/40 mx-auto mb-3" />
+                <p className="text-muted-foreground font-medium text-sm">Add Doctor's Photo Here</p>
+                <p className="text-xs text-muted-foreground/60 mt-1">Dr. Neha Bharti</p>
+              </div>
             </div>
           </div>
         </div>
