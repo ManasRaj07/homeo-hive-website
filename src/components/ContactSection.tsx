@@ -1,5 +1,14 @@
-import { MapPin, Globe, ExternalLink, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, ExternalLink, Phone, Mail, Clock, CalendarIcon, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const contactDetails = [
   {
@@ -27,6 +36,32 @@ const contactDetails = [
 ];
 
 const ContactSection = () => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState<Date>();
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !phone || !date) {
+      toast({ title: "Please fill all required fields", variant: "destructive" });
+      return;
+    }
+    setIsSubmitting(true);
+
+    const text = `New Appointment Request%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0ADate: ${encodeURIComponent(format(date, "PPP"))}%0AMessage: ${encodeURIComponent(message || "N/A")}`;
+    window.open(`https://wa.me/917004483089?text=${text}`, "_blank");
+
+    toast({ title: "Redirecting to WhatsApp", description: "Complete your booking via WhatsApp." });
+    setName("");
+    setPhone("");
+    setDate(undefined);
+    setMessage("");
+    setIsSubmitting(false);
+  };
+
   return (
     <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -42,7 +77,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-3 gap-8">
           {/* Contact cards */}
           <div className="space-y-4">
             <h3 className="font-heading text-xl font-semibold text-foreground mb-4">Contact Details</h3>
@@ -73,6 +108,50 @@ const ContactSection = () => {
                 Get Directions
               </a>
             </Button>
+          </div>
+
+          {/* Appointment Form */}
+          <div className="bg-card rounded-xl border shadow-sm p-6">
+            <h3 className="font-heading text-xl font-semibold text-foreground mb-6">Book an Appointment</h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name *</Label>
+                <Input id="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number *</Label>
+                <Input id="phone" type="tel" placeholder="+91 XXXXX XXXXX" value={phone} onChange={(e) => setPhone(e.target.value)} maxLength={15} />
+              </div>
+              <div className="space-y-2">
+                <Label>Preferred Date *</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !date && "text-muted-foreground")}>
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {date ? format(date, "PPP") : "Pick a date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={setDate}
+                      disabled={(d) => d < new Date() || d.getDay() === 0}
+                      initialFocus
+                      className="p-3 pointer-events-auto"
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="message">Message (optional)</Label>
+                <Textarea id="message" placeholder="Describe your health concern briefly..." value={message} onChange={(e) => setMessage(e.target.value)} maxLength={500} rows={3} />
+              </div>
+              <Button type="submit" variant="hero" size="lg" className="w-full" disabled={isSubmitting}>
+                <Send className="w-4 h-4 mr-2" />
+                Book via WhatsApp
+              </Button>
+            </form>
           </div>
 
           {/* Map */}
