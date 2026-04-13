@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Phone, Star } from "lucide-react";
+import { Leaf, Phone, Star } from "lucide-react";
 import drPhoto from "@/assets/dr-neha-bharti.jpeg";
 
 const HeroSection = () => {
