@@ -1,4 +1,5 @@
-import { Award, Star, Leaf, Users, Clock } from "lucide-react";
+import { Award, Star, Users, Clock } from "lucide-react";
+import drPhoto from "@/assets/dr-neha-bharti.jpeg";
 
 const credentials = [
   { icon: Clock, title: "3y+ Experience", sub: "Clinical Practice" },
@@ -47,13 +48,8 @@ const AboutSection = () => {
 
           {/* Circular portrait placeholder */}
           <div className="flex justify-center">
-            <div className="w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] rounded-2xl border-4 border-primary/20 bg-secondary/50 shadow-xl flex flex-col items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-primary/10" />
-              <div className="relative z-10 text-center">
-                <Leaf className="w-12 h-12 text-primary/40 mx-auto mb-3" />
-                <p className="text-muted-foreground font-medium text-sm">Add Doctor's Photo Here</p>
-                <p className="text-xs text-muted-foreground/60 mt-1">Dr. Neha Bharti</p>
-              </div>
+            <div className="w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] rounded-2xl border-4 border-primary/20 shadow-xl overflow-hidden">
+              <img src={drPhoto} alt="Dr. Neha Bharti - Homeopathic Doctor" className="w-full h-full object-cover object-top" />
             </div>
           </div>
         </div>
