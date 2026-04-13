@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Leaf, Phone, Star } from "lucide-react";
+import drPhoto from "@/assets/dr-neha-bharti.jpeg";
 
 const HeroSection = () => {
   return (
@@ -67,13 +68,7 @@ const HeroSection = () => {
           {/* Right: Doctor profile card */}
           <div className="order-1 lg:order-2 flex justify-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <div className="w-[320px] sm:w-[360px] lg:w-[400px] rounded-2xl bg-card border shadow-xl overflow-hidden">
-              {/* Photo placeholder */}
-              <div className="w-full h-[280px] sm:h-[320px] bg-gradient-to-b from-primary/5 to-primary/15 flex flex-col items-center justify-center gap-3 relative">
-                <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Leaf className="w-12 h-12 text-primary/40" />
-                </div>
-                <p className="text-muted-foreground font-medium text-sm">Add Doctor's Photo Here</p>
-              </div>
+              <img src={drPhoto} alt="Dr. Neha Bharti - Homeopathic Doctor" className="w-full h-[280px] sm:h-[320px] object-cover object-top" />
               {/* Info card */}
               <div className="p-5 text-center">
                 <h3 className="font-heading text-xl font-bold text-foreground">Dr. Neha Bharti</h3>
