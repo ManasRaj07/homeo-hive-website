@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { createWhatsAppLink } from "@/lib/whatsapp";
 
 const contactDetails = [
   {
@@ -51,8 +52,8 @@ const ContactSection = () => {
     }
     setIsSubmitting(true);
 
-    const text = `New Appointment Request%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0ADate: ${encodeURIComponent(format(date, "PPP"))}%0AMessage: ${encodeURIComponent(message || "N/A")}`;
-    window.open(`https://wa.me/917004483089?text=${text}`, "_blank");
+    const text = `New Appointment Request\nName: ${name}\nPhone: ${phone}\nDate: ${format(date, "PPP")}\nMessage: ${message || "N/A"}`;
+    window.open(createWhatsAppLink(text), "_blank", "noopener,noreferrer");
 
     toast({ title: "Redirecting to WhatsApp", description: "Complete your booking via WhatsApp." });
     setName("");
