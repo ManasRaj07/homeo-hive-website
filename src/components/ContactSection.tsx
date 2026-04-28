@@ -53,9 +53,32 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     const text = `New Appointment Request\nName: ${name}\nPhone: ${phone}\nDate: ${format(date, "PPP")}\nMessage: ${message || "N/A"}`;
-    window.open(createWhatsAppLink(text), "_blank", "noopener,noreferrer");
+    const url = createWhatsAppLink(text);
 
-    toast({ title: "Redirecting to WhatsApp", description: "Complete your booking via WhatsApp." });
+    // Use a real anchor click instead of window.open — popup blockers and
+    // sandboxed iframes (like the Lovable preview) often block window.open.
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    toast({
+      title: "Opening WhatsApp…",
+      description: "If WhatsApp didn't open, tap the link to continue.",
+      action: (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm font-medium text-primary underline whitespace-nowrap"
+        >
+          Open WhatsApp
+        </a>
+      ),
+    });
     setName("");
     setPhone("");
     setDate(undefined);
