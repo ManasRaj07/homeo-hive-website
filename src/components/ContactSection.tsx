@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { createWhatsAppLink, openWhatsAppLink } from "@/lib/whatsapp";
+
 
 const contactDetails = [
   {
