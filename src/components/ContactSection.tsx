@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { createWhatsAppLink, openWhatsAppLink } from "@/lib/whatsapp";
+
 
 const contactDetails = [
   {
@@ -53,26 +53,19 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     const text = `New Appointment Request\nName: ${name}\nPhone: ${phone}\nDate: ${format(date, "PPP")}\nMessage: ${message || "N/A"}`;
-    const url = createWhatsAppLink(text);
-
-    // Open WhatsApp via helper that escapes the preview iframe.
-    openWhatsAppLink(url);
+    const url = `https://wa.me/917004483089?text=${encodeURIComponent(text)}`;
 
     toast({
-      title: "Opening WhatsApp…",
-      description: "If WhatsApp didn't open, tap the link to continue.",
+      title: "Open WhatsApp to send",
+      description: "Tap the link to continue in WhatsApp.",
       action: (
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={(e) => {
-            e.preventDefault();
-            openWhatsAppLink(url);
-          }}
           className="text-sm font-medium text-primary underline whitespace-nowrap"
         >
-          Open WhatsApp
+          Chat on WhatsApp
         </a>
       ),
     });
