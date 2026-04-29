@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { createWhatsAppLink } from "@/lib/whatsapp";
+import { createWhatsAppLink, openWhatsAppLink } from "@/lib/whatsapp";
 
 const contactDetails = [
   {
@@ -55,15 +55,8 @@ const ContactSection = () => {
     const text = `New Appointment Request\nName: ${name}\nPhone: ${phone}\nDate: ${format(date, "PPP")}\nMessage: ${message || "N/A"}`;
     const url = createWhatsAppLink(text);
 
-    // Use a real anchor click instead of window.open — popup blockers and
-    // sandboxed iframes (like the Lovable preview) often block window.open.
-    const a = document.createElement("a");
-    a.href = url;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    // Open WhatsApp via helper that escapes the preview iframe.
+    openWhatsAppLink(url);
 
     toast({
       title: "Opening WhatsApp…",
@@ -73,6 +66,10 @@ const ContactSection = () => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={(e) => {
+            e.preventDefault();
+            openWhatsAppLink(url);
+          }}
           className="text-sm font-medium text-primary underline whitespace-nowrap"
         >
           Open WhatsApp
