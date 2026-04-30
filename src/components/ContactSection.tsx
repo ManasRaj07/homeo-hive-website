@@ -44,36 +44,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !phone || !date) {
-      toast({ title: "Please fill all required fields", variant: "destructive" });
-      return;
-    }
-    setIsSubmitting(true);
-
-    const url = "https://wa.me/+917004483089";
-
-    toast({
-      title: "Open WhatsApp to send",
-      description: "Tap the link to continue in WhatsApp.",
-      action: (
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm font-medium text-primary underline whitespace-nowrap"
-        >
-          Chat on WhatsApp
-        </a>
-      ),
-    });
-    setName("");
-    setPhone("");
-    setDate(undefined);
-    setMessage("");
-    setIsSubmitting(false);
-  };
+  const WHATSAPP_URL = "https://wa.me/+917004483089";
 
   return (
     <section id="contact" className="py-20 bg-background">
@@ -126,7 +97,17 @@ const ContactSection = () => {
           {/* Appointment Form */}
           <div className="bg-card rounded-xl border shadow-sm p-6">
             <h3 className="font-heading text-xl font-semibold text-foreground mb-6">Book an Appointment</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!name || !phone || !date) {
+                  toast({ title: "Please fill all required fields", variant: "destructive" });
+                  return;
+                }
+                window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+              }}
+              className="space-y-4"
+            >
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name *</Label>
                 <Input id="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} />
