@@ -2,7 +2,7 @@ export const WHATSAPP_PHONE = "+917004483089";
 export const DEFAULT_WHATSAPP_MESSAGE = "Hello Dr. Neha, I would like to book an appointment.";
 
 // Official WhatsApp basic click-to-chat link.
-export const createWhatsAppLink = () => "https://api.whatsapp.com/send/?phone=%2B917004483089&text&type=phone_number&app_absent=0";
+export const createWhatsAppLink = () => "https://wa.me/+917004483089";
 
 /**
  * Open a WhatsApp link in a way that escapes embedded preview iframes.
