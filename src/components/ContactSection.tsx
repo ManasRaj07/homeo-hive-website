@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { createWhatsAppLink, openWhatsAppLink } from "@/lib/whatsapp";
 
 
 const contactDetails = [
@@ -44,7 +45,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const WHATSAPP_URL = "https://wa.me/+917004483089";
+  const WHATSAPP_URL = createWhatsAppLink();
 
   return (
     <section id="contact" className="py-20 bg-background">
@@ -104,7 +105,7 @@ const ContactSection = () => {
                   toast({ title: "Please fill all required fields", variant: "destructive" });
                   return;
                 }
-                window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+                openWhatsAppLink(WHATSAPP_URL);
               }}
               className="space-y-4"
             >
