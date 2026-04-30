@@ -46,7 +46,7 @@ src/components/ContactSection.tsx
 The final URL remains:
 
 ```text
-https://wa.me/917004483089?text=<encoded message>
+https://wa.me/+917004483089
 ```
 
 The change is about how the browser opens that URL, not the URL itself.
