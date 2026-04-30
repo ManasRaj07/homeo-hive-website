@@ -97,7 +97,17 @@ const ContactSection = () => {
           {/* Appointment Form */}
           <div className="bg-card rounded-xl border shadow-sm p-6">
             <h3 className="font-heading text-xl font-semibold text-foreground mb-6">Book an Appointment</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!name || !phone || !date) {
+                  toast({ title: "Please fill all required fields", variant: "destructive" });
+                  return;
+                }
+                window.open(WHATSAPP_URL, "_blank", "noopener,noreferrer");
+              }}
+              className="space-y-4"
+            >
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name *</Label>
                 <Input id="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} maxLength={100} />
