@@ -44,7 +44,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const WHATSAPP_URL = "https://wa.me/+917004483089";
+  const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=%2B917004483089&text&type=phone_number&app_absent=0";
 
   return (
     <section id="contact" className="py-20 bg-background">
