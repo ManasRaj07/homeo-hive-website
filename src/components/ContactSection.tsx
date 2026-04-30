@@ -52,8 +52,7 @@ const ContactSection = () => {
     }
     setIsSubmitting(true);
 
-    const text = `New Appointment Request\nName: ${name}\nPhone: ${phone}\nDate: ${format(date, "PPP")}\nMessage: ${message || "N/A"}`;
-    const url = `https://wa.me/917004483089?text=${encodeURIComponent(text)}`;
+    const url = "https://wa.me/+917004483089";
 
     toast({
       title: "Open WhatsApp to send",
