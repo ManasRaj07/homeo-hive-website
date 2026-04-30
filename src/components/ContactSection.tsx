@@ -44,36 +44,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !phone || !date) {
-      toast({ title: "Please fill all required fields", variant: "destructive" });
-      return;
-    }
-    setIsSubmitting(true);
-
-    const url = "https://wa.me/+917004483089";
-
-    toast({
-      title: "Open WhatsApp to send",
-      description: "Tap the link to continue in WhatsApp.",
-      action: (
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm font-medium text-primary underline whitespace-nowrap"
-        >
-          Chat on WhatsApp
-        </a>
-      ),
-    });
-    setName("");
-    setPhone("");
-    setDate(undefined);
-    setMessage("");
-    setIsSubmitting(false);
-  };
+  const WHATSAPP_URL = "https://wa.me/+917004483089";
 
   return (
     <section id="contact" className="py-20 bg-background">
