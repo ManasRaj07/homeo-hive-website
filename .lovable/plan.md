@@ -1,58 +1,37 @@
-## What is happening
+The URL is correct: `https://wa.me/+917004483089`.
 
-The WhatsApp link itself is already in the correct `wa.me` format, but the problem is still happening because the app is being viewed inside the Lovable preview iframe. WhatsApp blocks being displayed inside embedded frames for security/clickjacking protection, so if the preview environment intercepts or reuses the same frame, WhatsApp shows the blocked/refused page again.
+What is happening is that `wa.me` redirects internally to `api.whatsapp.com`. Inside the Lovable preview iframe, that redirected WhatsApp page is blocked by browser/WhatsApp security, so you see `api.whatsapp.com is blocked ERR_BLOCKED_BY_RESPONSE`. When you paste the same link directly in the browser, it works because it is not inside the Lovable preview frame.
 
-This is not caused by the phone number or message format anymore. It is a navigation-context issue: WhatsApp must be opened outside the embedded preview.
+Plan to fix the click behavior as much as possible from the app side:
 
-## Research finding
+1. Use one central WhatsApp URL/helper
+   - Keep `https://wa.me/+917004483089` in `src/lib/whatsapp.ts`.
+   - Avoid duplicating the URL separately in components.
 
-WhatsApp and WhatsApp Web cannot be embedded in iframes. This is enforced by browser security headers such as `X-Frame-Options` / frame protection. The reliable workaround is not to embed or navigate the iframe, but to send the user to WhatsApp from the top-level browser context or a real new tab.
+2. Update the floating WhatsApp icon
+   - In `src/components/WhatsAppButton.tsx`, import the WhatsApp helper.
+   - Add an `onClick` handler that prevents Lovable preview from trying to load WhatsApp inside the iframe.
+   - Open the link through a safer helper instead of relying only on the anchor tag.
 
-## Plan
+3. Update “Book via WhatsApp”
+   - In `src/components/ContactSection.tsx`, remove the local `WHATSAPP_URL` duplicate.
+   - On successful form submit, call the same safe WhatsApp opener.
 
-1. Add a safer WhatsApp opener helper
-   - Keep `createWhatsAppLink()` as the central URL generator.
-   - Add a function such as `openWhatsAppLink(url)` in `src/lib/whatsapp.ts`.
-   - This function will:
-     - Detect when the site is running inside an iframe.
-     - First try to open a real new tab using `window.open(url, "_blank", "noopener,noreferrer")` from the user click/submit event.
-     - If blocked or still inside a frame, try assigning `window.top.location.href = url` to break out of the embedded preview.
-     - Fall back to `window.location.href = url` only as the last option.
+4. Improve the opener helper
+   - In `src/lib/whatsapp.ts`, adjust `openWhatsAppLink()` to prefer escaping the preview iframe when possible.
+   - If iframe escape is blocked, fall back to opening a real new tab.
+   - If both fail, navigate the current page as the last fallback.
 
-2. Change the floating WhatsApp logo from passive link to controlled click
-   - Update `src/components/WhatsAppButton.tsx` to use `onClick` with the new opener helper.
-   - Keep the `href`, `target="_blank"`, and `rel="noopener noreferrer"` attributes for accessibility and fallback behavior.
-   - Prevent the iframe from handling the link before our opener runs.
+Technical details:
 
-3. Change the appointment form redirect to use the same helper
-   - Update `src/components/ContactSection.tsx` so form submit calls `openWhatsAppLink(url)` instead of creating and clicking a temporary anchor.
-   - Keep the toast fallback link, because it is useful if browsers block automatic navigation.
-   - Make the fallback link also use the same safe opener behavior if possible.
-
-4. Add a visible fallback message for preview limitations
-   - If WhatsApp still cannot open automatically, the toast will clearly say: “If WhatsApp did not open, click Open WhatsApp.”
-   - The fallback will remain a normal new-tab link for real browsers.
-
-## Technical details
-
+```text
 Files to edit:
+- src/lib/whatsapp.ts
+- src/components/WhatsAppButton.tsx
+- src/components/ContactSection.tsx
 
-```text
-src/lib/whatsapp.ts
-src/components/WhatsAppButton.tsx
-src/components/ContactSection.tsx
-```
-
-The final URL remains:
-
-```text
+Final WhatsApp URL remains:
 https://wa.me/+917004483089
 ```
 
-The change is about how the browser opens that URL, not the URL itself.
-
-## Expected result
-
-- On the published site, WhatsApp opens normally in a new tab/app.
-- Inside Lovable preview, the code will try harder to escape the iframe instead of letting WhatsApp load inside the embedded preview.
-- If the browser blocks every automatic attempt, the user still gets a clear manual “Open WhatsApp” link.
+Important note: even after this improvement, Lovable preview may still block external WhatsApp navigation in some cases because that is a preview-environment limitation. On the published site, the same link should open normally.
